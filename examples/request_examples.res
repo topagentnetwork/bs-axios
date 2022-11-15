@@ -1,40 +1,32 @@
 /* Simple request */
-{
-  open Js.Promise
-  Axios.get("/user?ID=12345")
-  |> then_(response => resolve(Js.log(response["data"])))
-  |> catch(error => resolve(Js.log(error)))
-  |> ignore
-}
+open Js.Promise
+Axios.get("/user?ID=12345")
+|> then_(response => resolve(Js.log(response["data"])))
+|> catch(error => resolve(Js.log(error)))
+|> ignore
 
 /* Post requests */
-{
-  open Js.Promise
-  Axios.post("/user")
-  |> then_(response => resolve(Js.log(response["data"])))
-  |> catch(error => resolve(Js.log(error)))
-}
+Axios.post("/user")
+|> then_(response => resolve(Js.log(response["data"])))
+|> catch(error => resolve(Js.log(error)))
+|> ignore
 
 let user = {"username": "michel", "password": "12345678"}
 
-{
-  open Js.Promise
-  Axios.postData("/auth", user)
-  |> then_(response => resolve(Js.log(response["data"])))
-  |> catch(error => resolve(Js.log(error)))
-}
+Axios.postData("/auth", user)
+|> then_(response => resolve(Js.log(response["data"])))
+|> catch(error => resolve(Js.log(error)))
+|> ignore
 
 /* Concurrency */
-{
-  open Js.Promise
-  Axios.all2((Axios.get("/users/1"), Axios.get("/users/1/friends")))
-  |> then_(((user, friends)) => resolve(Js.log2(user["data"], friends["data"])))
-  |> catch(error => resolve(Js.log(error)))
-}
+Axios.all2((Axios.get("/users/1"), Axios.get("/users/1/friends")))
+|> then_(((user, friends)) => resolve(Js.log2(user["data"], friends["data"])))
+|> catch(error => resolve(Js.log(error)))
+|> ignore
 
 /* Headers */
 let headers = Axios.Headers.fromObj({"Content-type": "application/json"})
-Axios.getc("https://example.com", Axios.makeConfig(~headers, ()))
+Axios.getc("https://example.com", Axios.makeConfig(~headers, ())) |> ignore
 
 let headersDict = {
   open Js.Dict
@@ -44,7 +36,7 @@ let headersDict = {
   dict
 }
 let headers = Axios.Headers.fromDict(headersDict)
-Axios.getc("https://example.com", Axios.makeConfig(~headers, ()))
+Axios.getc("https://example.com", Axios.makeConfig(~headers, ())) |> ignore
 
 /* Node.js Agent */
 let httpsAgent = {
@@ -52,4 +44,4 @@ let httpsAgent = {
   config(~rejectUnauthorized=false, ()) |> create
 }
 
-Axios.getc("https://insecure-example.com", Axios.makeConfig(~httpsAgent, ()))
+Axios.getc("https://insecure-example.com", Axios.makeConfig(~httpsAgent, ())) |> ignore

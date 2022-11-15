@@ -2,7 +2,7 @@ open Axios_types;
 
 type t;
 
-[@bs.module "axios"] external create: config => t = "";
+[@bs.module "axios"] external create: config => t = "create";
 
 [@bs.send]
 external all:
@@ -270,3 +270,4 @@ external patchData: (t, string, Js.t('a)) => Js.Promise.t(response('b, 'c)) =
 external patchDatac:
   (t, string, Js.t('a), config) => Js.Promise.t(response('b, 'c)) =
   "patch";
+

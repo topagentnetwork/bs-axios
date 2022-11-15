@@ -16,15 +16,15 @@
     "bs-platform"
   ],
   "scripts": {
-    "build": "bsb -clean-world -make-world",
-    "watch": "bsb -clean-world -make-world -w",
+    "build": "rescript clean && rescript build",
+    "watch": "rescript clean && rescript build -w",
     "fmt": "prettier --write README.md",
     "preversion": "npm run build",
     "postversion": "npm publish"
   },
   "peerDependencies": {
     "axios": ">= 0.21.1 <= 0.22.0",
-    "bs-platform": "^7.1.0"
+    "rescript": "^10.0.1"
   },
   "bugs": {
     "url": "https://github.com/meafmira/bs-axios/issues"
@@ -33,6 +33,6 @@
   "devDependencies": {
     "axios": ">= 0.21.1 <= 0.22.0",
     "bs-platform": "^7.1.0",
-    "prettier": "^2.0.4"
+    "rescript": "^10.0.1"
   }
 }

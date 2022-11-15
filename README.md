@@ -22,82 +22,81 @@ $ npm install --save bs-axios
 
 See usage examples in examples folder:
 
-- [Request examples](./examples/request_examples.re) (GET, POST)
-- [Instance example](./examples/instance_example.re)
+- [Request examples](./examples/request_examples.res) (GET, POST)
+- [Instance example](./examples/instance_example.res)
 
 ### Simple request
 
-```reason
-Js.Promise.(
-  Axios.get("/user?ID=12345")
-  |> then_((response) => resolve(Js.log(response##data)))
-  |> catch((error) => resolve(Js.log(error)))
-);
+```rescript
+open Js.Promise
+Axios.get("/user?ID=12345")
+|> then_((response) => resolve(Js.log(response["data"])))
+|> catch((error) => resolve(Js.log(error)))
 ```
 
 ### Post requests
 
-```reason
-Js.Promise.(
-  Axios.post("/user")
-  |> then_((response) => resolve(Js.log(response##data)))
-  |> catch((error) => resolve(Js.log(error)))
-);
+```rescript
+open Js.Promise
+Axios.post("/user")
+|> then_((response) => resolve(Js.log(response["data"])))
+|> catch((error) => resolve(Js.log(error)))
 ```
 
-```reason
+```rescript
 let user = {
   "username": "michel",
   "password": "12345678"
 };
 
-Js.Promise.(
-  Axios.postData("/auth", {user})
-  |> then_((response) => resolve(Js.log(response##data)))
-  |> catch((error) => resolve(Js.log(error)))
-);
+open Js.Promise
+Axios.postData("/auth", {user})
+|> then_((response) => resolve(Js.log(response["data"])))
+|> catch((error) => resolve(Js.log(error)))
 ```
 
 ### Concurrency
 
-```reason
-Js.Promise.(
-  Axios.all2((Axios.get("/users/1"), Axios.get("/users/1/friends")))
-  |> then_(((user, friends)) => resolve(Js.log2(user##data, friends##data)))
-  |> catch((error) => resolve(Js.log(error)))
-);
+```rescript
+open Js.Promise
+
+Axios.all2((Axios.get("/users/1"), Axios.get("/users/1/friends")))
+|> then_(((user, friends)) => resolve(Js.log2(user["data"], friends["data"])))
+|> catch((error) => resolve(Js.log(error)))
 ```
 
 ### Creating an instance
 
 You can create a new instance of axios with a custom config.
 
-```reason
+```rescript
 open Axios;
 
 let inst = Instance.create(makeConfig(~baseURL="https://example.com", ()));
-Js.Promise.(Instance.get(inst, "/") |> then_((resp) => resolve(Js.log(resp##data))));
+
+open Js.Promise;
+Instance.get(inst, "/") |> then_((resp) => resolve(Js.log(resp["data"])));
 ```
 
 ### Error handling
 
-```reason
+```rescript
 external promiseErrorToJsObj : Js.Promise.error => Js.t('a) = "%identity";
 
-Js.Promise.(
-  Instance.get(inst, "/")
-  |> then_(resp => resolve(Belt.Result.Ok(resp)))
-  |> catch(error => {
-       let error = error |> promiseErrorToJsObj;
-       Js.log(error##response##status);
-       resolve(Belt.Result.Error(error));
-     })
-);
+open Js.Promise
+
+Instance.get(inst, "/")
+|> then_(resp => resolve(Belt.Result.Ok(resp)))
+|> catch(error => {
+     let error = error |> promiseErrorToJsObj;
+     Js.log(error["response"]["status"]);
+     resolve(Belt.Result.Error(error));
+   })
 ```
 
 ### Headers
 
-```reason
+```rescript
 let headers = Axios.Headers.fromObj({"Content-type": "application/json"});
 Axios.getc("https://example.com", Axios.makeConfig(~headers, ()));
 
@@ -120,7 +119,7 @@ allows for configuring connection persistence and reuse. For secure connections,
 [`HTTPS Agent`](https://nodejs.org/api/https.html#https_class_https_agent) allows security related
 configuration to be provided.
 
-```reason
+```rescript
 let httpsAgent =
   Axios.Agent.Https.(config(~rejectUnauthorized=false, ()) |> create);
 

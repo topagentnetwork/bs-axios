@@ -5,7 +5,7 @@ type t
 @module("axios") external create: config => t = "create"
 
 @send
-external all: (t, array<Js.Promise.t<response<_, _>>>) => Js.Promise.t<array<response<_, _>>> = ""
+external all: (t, array<Js.Promise.t<response<_, _>>>) => Js.Promise.t<array<response<_, _>>> = "all"
 
 @send
 external all2: (
@@ -177,20 +177,20 @@ external all10: (
   response<'a9, 'b9>,
 )> = "all"
 
-@send external request: t => Js.Promise.t<response<'a, 'b>> = ""
+@send external request: t => Js.Promise.t<response<'a, 'b>> = "request"
 
-@send external get: (t, string) => Js.Promise.t<response<'a, 'b>> = ""
+@send external get: (t, string) => Js.Promise.t<response<'a, 'b>> = "get"
 
 @send
 external getc: (t, string, config) => Js.Promise.t<response<'a, 'b>> = "get"
 
 @send
-external delete: (t, string) => Js.Promise.t<response<'a, 'b>> = ""
+external delete: (t, string) => Js.Promise.t<response<'a, 'b>> = "delete"
 
 @send
 external deletec: (t, string, config) => Js.Promise.t<response<'a, 'b>> = "delete"
 
-@send external post: (t, string) => Js.Promise.t<response<'a, 'b>> = ""
+@send external post: (t, string) => Js.Promise.t<response<'a, 'b>> = "post"
 
 @send
 external postData: (t, string, 'a) => Js.Promise.t<response<'b, 'c>> = "post"
@@ -198,7 +198,7 @@ external postData: (t, string, 'a) => Js.Promise.t<response<'b, 'c>> = "post"
 @send
 external postDatac: (t, string, 'a, config) => Js.Promise.t<response<'b, 'c>> = "post"
 
-@send external put: (t, string) => Js.Promise.t<response<'a, 'b>> = ""
+@send external put: (t, string) => Js.Promise.t<response<'a, 'b>> = "put"
 
 @send
 external putData: (t, string, 'a) => Js.Promise.t<response<'b, 'c>> = "put"
@@ -207,7 +207,7 @@ external putData: (t, string, 'a) => Js.Promise.t<response<'b, 'c>> = "put"
 external putDatac: (t, string, 'a, config) => Js.Promise.t<response<'b, 'c>> = "put"
 
 @send
-external patch: (t, string) => Js.Promise.t<response<'a, 'b>> = ""
+external patch: (t, string) => Js.Promise.t<response<'a, 'b>> = "patch"
 
 @send
 external patchData: (t, string, 'a) => Js.Promise.t<response<'b, 'c>> = "patch"
